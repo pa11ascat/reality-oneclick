@@ -1,3 +1,6 @@
+import os
+import subprocess
+
 def menu()-> int:
     menu_desc = '''
     1.Configuration
@@ -21,5 +24,22 @@ def menu()-> int:
 def configuration():
     pass
 
-a = menu()
+while (True):
+    choice = menu()
+    match choice:
+        case 1:
+            print("Option 1 selected")
+        case 2:
+            os.system("clear")
+            domain = str(input("Enter Your Domain(e.g. digikala.com): "))
+            result = os.system("xray tls ping " + domain)
+            print(result)
+        case 3:
+            print("Option 3 selected")
+        case 0:
+            print("Exiting program")
+            break
+        case _:
+            print("wrong value selected")
 
+        
