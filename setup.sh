@@ -16,20 +16,21 @@ sysctl -p
 # install xray x2
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.0 -u root
 
-if  echo "Xray Not Found" | grep -q `xray -version` ; then
+if ! echo "Xray 1.8.0" | grep -q `xray -version` ; then
     echo "ERROR: Unable to install Xray 1.8.0"
     exit
 fi
 
 apt install nginx -y
 
-if ! echo "nginx Not Found" | grep -q `nginx -v` ; then
+if ! echo "nginx version:" | grep -q `nginx -v` ; then
     echo "ERROR: Unable to install nginx"
     exit
 fi
 
-apt install certbot python3-certbot-nginx -y;
-
-certbot --nginx -d;
+apt install python3 -y;
 
 # run python cli
+if test -f "./reality.py" ; then
+    python3 ./reality.py
+fi
