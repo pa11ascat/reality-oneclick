@@ -1,0 +1,176 @@
+{
+  "inbounds": [
+    {
+      "port": 443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "u_uuid-vision",
+            "flow": "xtls-rprx-vision",
+            "email": "u_email"
+          }
+        ],
+        "decryption": "none",
+        "fallbacks": [
+          {
+            "dest": "@vlessh2c",
+            "xver": 1
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "u_domain:443",
+          "xver": 0,
+          "serverNames": [
+            "u_domain"
+          ],
+          "privateKey": "u_privkey",
+          "shortIds": [
+            "u_shid"
+          ]
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "listen": "@vlessh2c",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "u_uuid4_h2",
+            "email": "u_email"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "h2",
+        "security": "none",
+        "sockopt": {
+          "acceptProxyProtocol": true
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "blocked"
+    }
+  ],
+  "api": {
+    "tag": "api",
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService"
+    ]
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserUplink": true,
+        "statsUserDownlink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "log": {
+    "loglevel": "info",
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log"
+  },
+  "dns": {
+    "servers": [
+      "https+local://cloudflare-dns.com/dns-query",
+      "1.0.0.1",
+      "1.1.1.1",
+      "8.8.8.8",
+      "8.8.4.4",
+      "localhost"
+    ]
+  },
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "domain": [
+          "instagram.com",
+          "www.instagram.com",
+          "mediafire.com",
+          "www.mediafire.com"
+        ],
+        "outboundTag": "proxy",
+        "type": "field"
+      },
+      {
+        "domain": [
+          "regexp:.*\\.ir$",
+          "ext:iran.dat:ir",
+          "ext:iran.dat:ads",
+          "ext:iran.dat:other",
+          "geosite:category-ir",
+          "geosite:category-ir-gov",
+          "geosite:category-ir-news",
+          "geosite:category-ir-bank",
+          "geosite:category-ir-tech",
+          "geosite:category-ir-travel",
+          "geosite:category-ir-scholar",
+          "geosite:category-ir-shopping",
+          "geosite:category-ir-insurance"
+        ],
+        "type": "field",
+        "outboundTag": "blocked"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:ir"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "protocol": [
+          "bittorrent"
+        ],
+        "type": "field",
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}
