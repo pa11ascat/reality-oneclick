@@ -16,14 +16,14 @@ sysctl -p
 # install xray x2
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.0 -u root
 
-if ! echo "Xray 1.8.0" | grep -q `xray -version` ; then
+if ! echo "Xray 1.8.0" | grep -q "Xray 1.8.0" `xray -version` ; then
     echo "ERROR: Unable to install Xray 1.8.0"
     exit
 fi
 
 apt install nginx -y
 
-if ! echo "nginx version:" | grep -q `nginx -v` ; then
+if ! echo "nginx version:" | grep -q "nginx version:"git `nginx -v` ; then
     echo "ERROR: Unable to install nginx"
     exit
 fi
