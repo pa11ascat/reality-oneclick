@@ -29,5 +29,5 @@ apt install python3.10 -y;
 
 # run python cli
 if test -f "./reality.py" ; then
-    python3 ./reality.py
+    python3.10 ./reality.py
 fi
