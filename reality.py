@@ -24,8 +24,16 @@ def menu()-> int:
     print(menu_desc)
 
     num = int(input("please write a number from above and press enter: "))
-
-    return num
+    if num == 0:
+        return Menu.EXIT
+    elif num == 1:
+        return Menu.CONFIG
+    elif num == 2:
+        return Menu.RPING
+    elif num == 3:
+        return Menu.EXPORT
+    else:
+        return Menu.HOME
 
 def reality_ping():
     print("----------------------------")
@@ -58,8 +66,6 @@ while (True):
         case 0:
             print("Exiting program")
             break
-        case _:
-            print("wrong value selected")
-            choice = Menu.HOME
+
 
         
