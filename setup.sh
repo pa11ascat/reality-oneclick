@@ -19,7 +19,13 @@ bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release
 
 apt install nginx -y
 
-apt install python3 -y;
+apt install software-properties-common -y
+
+add-apt-repository ppa:deadsnakes/ppa -y
+
+apt update
+
+apt install python3.10 -y;
 
 # run python cli
 if test -f "./reality.py" ; then
